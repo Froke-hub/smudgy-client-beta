@@ -13,8 +13,8 @@
 - Add wanted poster badge to the ID (#WANTED)
 - Add UI scaling
 - Add localStorage for usernames (usernames without pay)
-- add Custom client launcher
-- add ustom short IDs (this is in the extension)
+- add Custom client launcher (here you go dawn have a fun time https://obs-akuma.github.io/smudgy-launcher/launcher.html)
+- add Custom short IDs (this is in the extension)
 - add Compact inventory
 - add Quick account switcher
 - remove Forced Ui size
