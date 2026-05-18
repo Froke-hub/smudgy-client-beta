@@ -1,4 +1,4 @@
-# TODO / Features
+# TODO / Features i know dawn client WILL take ;3*
 
 - Add clan tracking
 - Move all features from the extension to the client
