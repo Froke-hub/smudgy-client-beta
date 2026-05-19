@@ -2,6 +2,7 @@
   rel="stylesheet"
   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 />
+
 <div class="menu" data-theme="dark" data-active="true">
   <aside class="sidebar">
     <div class="search-input">
@@ -30,12 +31,16 @@
         Client
       </div>
       <div data-tab="scripts" class="juice tab">
-        <i class="fas fa-file-code"></i>
-        Scripts
+        <i class="fas fa-code"></i>
+        Plugins
       </div>
       <div data-tab="about" class="juice tab">
         <i class="fas fa-circle-info"></i>
         About
+      </div>
+      <div data-tab="assets" class="juice tab">
+        <i class="fas fa-images"></i>
+        Assets
       </div>
     </div>
     <div class="footer">
@@ -132,6 +137,17 @@
             max="2"
             class="range"
             data-setting="interface_bounds"
+          />
+        </div>
+        <div class="option">
+          <span>Server Zoom</span>
+          <input
+            type="range"
+            min="0.01"
+            max="1.2"
+            step="0.01"
+            class="range"
+            data-setting="server_zoom"
           />
         </div>
       </div>
@@ -552,7 +568,48 @@
           </div>
         </div>
       </div>
-      <!-- NEW LINE ADDED AFTER "Froke Tools" -->
+      <div class="option-group">
+        <div class="about-top compact">
+          <img src="https://kirkacommunityhub.pages.dev/assets/icon.png" />
+          <div class="about-info compact">
+            <span class="title">Kirka Community Hub</span>
+            <div class="about-more">
+              <div></div>
+              <div class="about-buttons">
+                <a
+                  href="https://kirkacommunityhub.pages.dev/"
+                  class="about-juice alt"
+                >
+                  <i class="fas fa-arrow-up-right-from-square"></i>
+                  <p>View</p>
+                  <div class="custom-border"></div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="option-group">
+        <div class="about-top compact">
+          <img src="https://css.daymian.xyz/imgs/icon.png" />
+          <div class="about-info compact">
+            <span class="title">CSS Daymian</span>
+            <div class="about-more">
+              <div></div>
+              <div class="about-buttons">
+                <a
+                  href="https://css.daymian.xyz"
+                  class="about-juice alt"
+                >
+                  <i class="fas fa-arrow-up-right-from-square"></i>
+                  <p>View</p>
+                  <div class="custom-border"></div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="option-group">
         <div class="about-top compact">
           <img src="https://sillimons.fun/favicon.svg" />
@@ -576,14 +633,14 @@
       </div>
       <div class="option-group">
         <div class="about-top compact">
-          <img src="https://raw.githubusercontent.com/OBS-Akuma/KirkaSkins/refs/heads/main/img/booster.webp" />
+          <img src="https://sillimons.fun/favicon.svg" />
           <div class="about-info compact">
-            <span class="title">Patch Notes</span>
+            <span class="title">Sillimons Tools</span>
             <div class="about-more">
               <div></div>
               <div class="about-buttons">
                 <a
-                  href="https://freaksforever.xyz/patch-notes"
+                  href="https://sillimons.fun"
                   class="about-juice alt"
                 >
                   <i class="fas fa-arrow-up-right-from-square"></i>
@@ -595,8 +652,40 @@
           </div>
         </div>
       </div>
-</div>
+      <div class="option-group">
+        <div class="about-top compact">
+          <img src="https://kirka.lukeskywalk.com/kirkatradeslogo_36x36.png" />
+          <div class="about-info compact">
+            <span class="title">KirkaTrades</span>
+            <div class="about-more">
+              <div></div>
+              <div class="about-buttons">
+                <a
+                  href="https://kirka.lukeskywalk.com/"
+                  class="about-juice alt"
+                >
+                  <i class="fas fa-arrow-up-right-from-square"></i>
+                  <p>View</p>
+                  <div class="custom-border"></div>
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
+    </div>
+    <div id="assets-options" class="juice options">
+      <div class="option-group">
+        <div class="assets-tabs">
+          <div class="assets-tab active" data-assets-tab="textures">Textures</div>
+          <div class="assets-tab" data-assets-tab="crosshairs">Crosshairs</div>
+        </div>
+      </div>
+      <div class="option-group assets-grid-group">
+        <div id="assets-loading" class="assets-loading">
+          <i class="fas fa-spinner fa-spin"></i> Loading...
+        </div>
+        <div id="assets-grid" class="assets-grid"></div>
       </div>
     </div>
   </div>
