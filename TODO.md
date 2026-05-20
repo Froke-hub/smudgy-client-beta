@@ -18,3 +18,4 @@
 - Add compact inventory
 - Add quick account switcher
 - Remove forced UI size
+- add this shit <img width="1442" height="827" alt="image" src="https://github.com/user-attachments/assets/6190aba8-8b5d-42ac-a2f7-d17eb2779ac0" />
