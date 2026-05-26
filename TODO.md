@@ -3,7 +3,7 @@
 - Add clan tracking
 - Move all features from the extension to the client
 - ~~Add clan gradient~~ (Dawn Client has this feature not adding because it's not truly needed, unlike other features such as clan tracking, which helps clan users know what they've done)
-- Add linking system
+- ~~Add linking system~~
 - ~~Fix chat being too big (make setting)~~
 - Add clan lookup
 - Add inventory value
@@ -11,12 +11,24 @@
 - Add lobby badges
 - Add sent friend requests, only works/logs if in client
 - Add wanted poster badge to the ID (#WANTED)
-- Add UI scaling
+- ~~Add UI scaling~~
 - Add localStorage for usernames (usernames without pay)
 - Add custom client launcher (here you go Dawn, have a fun time: https://obs-akuma.github.io/smudgy-launcher/launcher.html)
-- Add custom short IDs (this is in the extension)
+- ~~Add custom short IDs (this is in the extension)~~
 - Add compact inventory
 - Add quick account switcher
-- Remove forced UI size
-- add this shit <img width="1442" height="827" alt="image" src="https://github.com/user-attachments/assets/6190aba8-8b5d-42ac-a2f7-d17eb2779ac0" />
+- ~~Remove forced UI size~~
+- add this shit
+
+<img width="1442" height="827" alt="image" src="https://github.com/user-attachments/assets/6190aba8-8b5d-42ac-a2f7-d17eb2779ac0" />
+
 - Add username change item in inv (might do this, Would need a way to save the count And make it so it shows that Count for THAT user.)
+- Add banners to profiles in the friends list, image:
+
+<img width="513" height="255" alt="image" src="https://github.com/user-attachments/assets/fe54b273-dd21-490c-90cd-d361ffbefe1f" />
+
+- add html edit mode, video:
+
+https://github.com/user-attachments/assets/95d0e8fc-7a0b-4376-b9a7-7953a1aece96
+
+
