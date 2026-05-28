@@ -32,6 +32,7 @@
     "endgame_message_enabled": false,
     "endgame_message_text": "Good Game",
     "simple_invite_btns": false,
+    "always_show_ingame_menu": false,
     "custom_theme_bg": "#0a0a0f",
     "custom_theme_text": "#ffffff",
     "custom_theme_accent": "#1a8e50",

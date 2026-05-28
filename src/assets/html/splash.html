@@ -68,7 +68,10 @@
     verDiv.style.alignSelf = 'flex-end';
     
     fetch('https://raw.githubusercontent.com/OBS-Akuma/smudgy-client/refs/heads/main/Api/dyk.json')
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return res.json();
+      })
       .then(data => {
         const facts = Object.values(data[0]);
         const randomFact = facts[Math.floor(Math.random() * facts.length)];
@@ -76,6 +79,14 @@
         dykDiv.textContent = randomFact;
         dykDiv.style.fontSize = '1rem';
         splash.appendChild(dykDiv);
+      })
+      .catch(error => {
+        console.error('API Error:', error);
+        const errorDiv = document.createElement('div');
+        errorDiv.textContent = 'Failed to load fact';
+        errorDiv.style.fontSize = '1rem';
+        errorDiv.style.color = '#ff9999';
+        splash.appendChild(errorDiv);
       });
   </script>
 </body>
