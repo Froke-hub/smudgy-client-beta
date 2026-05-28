@@ -1,12 +1,11 @@
 # the black screen bug
 
 Do not download smudgy-client-setup-win-ia32-0.0.3.exe
-Idk why but it won't load things. always down load smudgy-client-setup-win-0.0.0.exe (or at the time of making this smudgy-client-setup-win-0.0.3.exe
-)
+Idk why but it won't load things. always down load smudgy-client-setup-win-0.0.0.exe (or at the time of making this smudgy-client-setup-win-0.0.8.exe)
 
 # ~~The Big chat bug~~
 
-~This is Not a bug so stop saying it is, will be fixed next update.~ (updated)
+~~This is Not a bug so stop saying it is, will be fixed next update.~~ (updated)
 
 # Twitch Login bug
 
@@ -18,6 +17,6 @@ This happens due to new users joining the game and your html getting pushed down
 class="kirka-badges" data-short-id="NUGGET"
 ```
 
-# Username and Kills on top of one after winning a game.
+# ~~Username and Kills on top of one after winning a game.~~
 
-unsure why this is happening. will fix soon.
+~~unsure why this is happening. will fix soon.~~
