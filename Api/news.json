@@ -1,11 +1,11 @@
 [
   {
     "category": "general",
-    "title": "Smudgy Extension",
-    "content": "added custom shortids, #GLOWIN > #SYSTEM v0.0.6",
-    "img": "https://github.com/user-attachments/assets/a24f1982-1879-4210-8630-38cb9a9a2e43",
-    "imgType": "banner",
-    "link": "https://github.com/OBS-Akuma/Smudgy-Extension/blob/main/README.md#how-to-update",
+    "title": "Smudgy Client",
+    "content": "Super cool profile Background update ;3",
+    "img": "https://www.smudgy.store/uploads/icon.png",
+    "imgType": "icon",
+    "link": "https://client.smudgy.store",
     "updatedAt": 172800000,
     "live": true
   },
