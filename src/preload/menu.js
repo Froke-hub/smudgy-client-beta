@@ -460,7 +460,7 @@ class Menu {
       styleEl.id = "juice-server-zoom";
       document.head.appendChild(styleEl);
     }
-    styleEl.innerHTML = `.content .servers { zoom: ${value}; }`;
+    styleEl.innerHTML = `.right-interface, .play-content, .players-lobby, .heads[data-v-00ce7b25], .logo, .playerholderelement { zoom: ${value}; }`;
   }
 
   // ── Always Show In-Game Menu ──────────────────────────────────────────────
@@ -526,6 +526,14 @@ class Menu {
         this.injectSimpleInviteBtns();
       } else {
         this.removeSimpleInviteBtns();
+      }
+    }
+
+    if (setting === "always_show_ingame_menu") {
+      if (value) {
+        this.injectAlwaysShowIngameMenu();
+      } else {
+        this.removeAlwaysShowIngameMenu();
       }
     }
 
@@ -625,6 +633,12 @@ class Menu {
     });
     tab.classList.add("active");
     this.tabToContentMap[tab.dataset.tab].classList.add("active");
+
+    // Show/hide assets subtabs in sidebar
+    const subtabs = this.menu.querySelector("#assets-subtabs");
+    if (subtabs) {
+      subtabs.style.display = tabName === "assets" ? "flex" : "none";
+    }
   }
 
   handleDropdowns() {
@@ -1004,13 +1018,10 @@ class Menu {
           }
         }
 
-        // Main polling loop — also handles reset detection
         setInterval(() => {
           const timers = document.querySelectorAll('.timer.bg.text-1');
 
           if (timers.length === 0) {
-            // Timer is gone (back in lobby / between games) — mark it so we
-            // know to reset once a new timer appears
             timerWasAbsent = true;
             lastTimerValue = null;
             return;
@@ -1018,9 +1029,6 @@ class Menu {
 
           const currentValue = timers[0].textContent.trim();
           const currentSeconds = parseTimerSeconds(currentValue);
-
-          // Reset when: timer was absent and came back, OR the timer jumped
-          // upward (new game started with a fresh countdown)
           const lastSeconds = parseTimerSeconds(lastTimerValue);
           const timerJumpedUp = lastSeconds !== -1 && currentSeconds > lastSeconds + 5;
 
@@ -1049,23 +1057,20 @@ class Menu {
     const TEXTURE_API = "https://raw.githubusercontent.com/imnotkoolkid/KCH/refs/heads/main/data/texture.json";
     const CROSSHAIR_API = "https://raw.githubusercontent.com/imnotkoolkid/KCH/refs/heads/main/data/crosshair.json";
     const CSS_API = "https://raw.githubusercontent.com/imnotkoolkid/KCH/refs/heads/main/data/css.json";
+    const MAPS_API = "https://raw.githubusercontent.com/OBS-Akuma/KirkaBadges/refs/heads/main/Json/maps.json";
     const TEXTURE_KEY = "SETTINGS___SETTING/BLOCKS___SETTING/TEXTURE_URL___SETTING";
     const CROSSHAIR_KEY = "SETTINGS___SETTING/SNIPER___SETTING/SCOPE_URL___SETTING";
 
     const FAV_KEY = "juice-asset-favorites";
     const DAYMIAN_BASE = "https://css.daymian.xyz";
     const DAYMIAN_EXCLUDED = new Set([
-      "pink",
-      "purp",
-      "uwu",
-      "wolfey",
-      "jett",
-      "monochrome",
+      "pink", "purp", "uwu", "wolfey", "jett", "monochrome",
     ]);
 
     let textureData = [];
     let crosshairData = [];
     let cssData = [];
+    let mapsData = [];
     let currentType = "css";
     let loaded = false;
 
@@ -1096,7 +1101,6 @@ class Menu {
     const getEls = () => ({
       grid: this.menu.querySelector("#assets-grid"),
       loading: this.menu.querySelector("#assets-loading"),
-      tabs: this.menu.querySelectorAll(".assets-tab"),
     });
 
     const showReloadToast = () => {
@@ -1116,11 +1120,9 @@ class Menu {
     };
 
     const buildAssetCard = (item, type) => {
-      const imgSrc =
-        type === "textures" ? item.textureImage : item.Crosshair;
+      const imgSrc = type === "textures" ? item.textureImage : item.Crosshair;
       if (!imgSrc) return null;
-      const storageKey =
-        type === "textures" ? TEXTURE_KEY : CROSSHAIR_KEY;
+      const storageKey = type === "textures" ? TEXTURE_KEY : CROSSHAIR_KEY;
       const favActive = isFav(type, item.id);
 
       const card = document.createElement("div");
@@ -1151,9 +1153,7 @@ class Menu {
         e.stopPropagation();
         toggleFav(type, item.id);
         favBtn.classList.toggle("active");
-        favBtn.title = favBtn.classList.contains("active")
-          ? "Unfavorite"
-          : "Favorite";
+        favBtn.title = favBtn.classList.contains("active") ? "Unfavorite" : "Favorite";
         if (currentType === "favorites") renderGrid("favorites");
       });
 
@@ -1171,6 +1171,66 @@ class Menu {
 
       return card;
     };
+
+    // ── Maps grid renderer ─────────────────────────────────────────────────
+    const renderMapsGrid = (grid, data) => {
+      grid.innerHTML = "";
+      grid.style.gridTemplateColumns = "repeat(3, 1fr)";
+
+      if (!data || !data.length) {
+        grid.innerHTML = `<div class="assets-empty"><i class="fas fa-map"></i><span>No maps found</span></div>`;
+        return;
+      }
+
+      data.forEach((map) => {
+        const card = document.createElement("div");
+        card.className = "asset-card map-card";
+
+        card.innerHTML = `
+          <div class="asset-img-wrap">
+            <img src="${map.image}" alt="${map.name}" />
+          </div>
+          <div class="asset-info">
+            <span class="asset-id">${map.name}</span>
+            ${map.modes && map.modes.length
+              ? `<div class="asset-tags">${map.modes.map(m => `<span class="asset-tag">${m}</span>`).join("")}</div>`
+              : ""}
+          </div>
+          <button class="asset-apply juice-button map-copy-btn" ${!map.file ? "disabled" : ""}>
+            <span class="text"><i class="fas fa-copy"></i> Copy</span>
+            <div class="custom-border"></div>
+          </button>
+        `;
+
+        const copyBtn = card.querySelector(".map-copy-btn");
+        if (map.file) {
+          copyBtn.addEventListener("click", async () => {
+            const textEl = copyBtn.querySelector(".text");
+            try {
+              const res = await fetch(map.file);
+              if (!res.ok) throw new Error("Failed to fetch map file");
+              const text = await res.text();
+              await navigator.clipboard.writeText(text);
+              textEl.innerHTML = `<i class="fas fa-check"></i> Copied!`;
+              card.classList.add("applied");
+              setTimeout(() => {
+                textEl.innerHTML = `<i class="fas fa-copy"></i> Copy`;
+                card.classList.remove("applied");
+              }, 1500);
+            } catch (err) {
+              textEl.innerHTML = `<i class="fas fa-xmark"></i> Failed`;
+              setTimeout(() => {
+                textEl.innerHTML = `<i class="fas fa-copy"></i> Copy`;
+              }, 1500);
+              console.error("Map copy failed:", err);
+            }
+          });
+        }
+
+        grid.appendChild(card);
+      });
+    };
+    // ──────────────────────────────────────────────────────────────────────
 
     const renderGrid = (type) => {
       const { grid } = getEls();
@@ -1190,23 +1250,19 @@ class Menu {
         return;
       }
 
+      if (type === "maps") {
+        renderMapsGrid(grid, mapsData);
+        return;
+      }
+
       if (type === "favorites") {
         const textureFavs = textureData.filter((i) => isFav("textures", i.id));
-        const crosshairFavs = crosshairData.filter((i) =>
-          isFav("crosshairs", i.id)
-        );
+        const crosshairFavs = crosshairData.filter((i) => isFav("crosshairs", i.id));
         const cssFavs = cssData.filter(
-          (i) =>
-            isFav("css", i.title) &&
-            i.availability !== "showcase" &&
-            !!i.downloadUrl
+          (i) => isFav("css", i.title) && i.availability !== "showcase" && !!i.downloadUrl
         );
 
-        if (
-          !textureFavs.length &&
-          !crosshairFavs.length &&
-          !cssFavs.length
-        ) {
+        if (!textureFavs.length && !crosshairFavs.length && !cssFavs.length) {
           grid.innerHTML = `<div class="assets-empty"><i class="fas fa-star"></i><span>No favorites yet — click the star on any asset to add it here</span></div>`;
           return;
         }
@@ -1303,15 +1359,17 @@ class Menu {
       grid.style.display = "none";
 
       try {
-        const [tex, cross, css, daymian] = await Promise.all([
+        const [tex, cross, css, daymian, maps] = await Promise.all([
           fetch(TEXTURE_API).then((r) => r.json()),
           fetch(CROSSHAIR_API).then((r) => r.json()),
           fetch(CSS_API).then((r) => r.json()),
           fetchDaymianCSS(),
+          fetch(MAPS_API).then((r) => r.json()),
         ]);
         textureData = tex;
         crosshairData = cross;
         cssData = [...css, ...daymian];
+        mapsData = maps;
       } catch (err) {
         loading.style.display = "none";
         grid.style.display = "grid";
@@ -1323,27 +1381,34 @@ class Menu {
       grid.style.display = "grid";
       renderGrid(currentType);
 
-      const { tabs } = getEls();
-      tabs.forEach(t => {
-        t.classList.toggle("active", t.dataset.assetsTab === currentType);
-      });
+      // Sync active state on sidebar subtabs
+      const subtabContainer = this.menu.querySelector("#assets-subtabs");
+      if (subtabContainer) {
+        subtabContainer.querySelectorAll(".assets-subtab").forEach(t => {
+          t.classList.toggle("active", t.dataset.assetsTab === currentType);
+        });
+      }
     };
 
-    const assetsPanel = this.menu.querySelector("#assets-options");
-    if (assetsPanel) {
-      assetsPanel.addEventListener("click", (e) => {
-        const tab = e.target.closest(".assets-tab");
+    // Sidebar subtab clicks
+    const subtabContainer = this.menu.querySelector("#assets-subtabs");
+    if (subtabContainer) {
+      subtabContainer.addEventListener("click", (e) => {
+        const tab = e.target.closest(".assets-subtab");
         if (!tab) return;
-        assetsPanel.querySelectorAll(".assets-tab").forEach(t => t.classList.remove("active"));
+        subtabContainer.querySelectorAll(".assets-subtab").forEach(t => t.classList.remove("active"));
         tab.classList.add("active");
         currentType = tab.dataset.assetsTab;
         renderGrid(currentType);
       });
     }
 
+    // Main Assets tab click — show subtabs and lazy-load
     const mainTab = this.menu.querySelector(`[data-tab="assets"]`);
     if (mainTab) {
       mainTab.addEventListener("click", () => {
+        const subtabs = this.menu.querySelector("#assets-subtabs");
+        if (subtabs) subtabs.style.display = "flex";
         if (!loaded) {
           loaded = true;
           loadData();
@@ -1364,12 +1429,9 @@ class Menu {
       (item) =>
         item.availability !== "showcase" &&
         !!item.downloadUrl &&
-        (!item.tags ||
-          !item.tags.map((t) => t.toLowerCase()).includes("showcase"))
+        (!item.tags || !item.tags.map((t) => t.toLowerCase()).includes("showcase"))
     );
-    const sorted = favCtx
-      ? favCtx.sortByFav(visible, "css", (i) => i.title)
-      : visible;
+    const sorted = favCtx ? favCtx.sortByFav(visible, "css", (i) => i.title) : visible;
 
     sorted.forEach((item) => {
       const card = this.buildCSSCardElement(item, {
@@ -1410,9 +1472,7 @@ class Menu {
         : `<span class="asset-tag availability paid">Paid</span>`;
 
     const truncatedTitle =
-      item.title.length > 18
-        ? item.title.slice(0, 18).trimEnd() + "…"
-        : item.title;
+      item.title.length > 18 ? item.title.slice(0, 18).trimEnd() + "…" : item.title;
 
     card.innerHTML = `
       <div class="asset-img-wrap css-img-wrap">
@@ -1446,9 +1506,7 @@ class Menu {
         e.stopPropagation();
         toggleFav("css", item.title);
         favBtn.classList.toggle("active");
-        favBtn.title = favBtn.classList.contains("active")
-          ? "Unfavorite"
-          : "Favorite";
+        favBtn.title = favBtn.classList.contains("active") ? "Unfavorite" : "Favorite";
         if (onToggle) onToggle();
       });
     }
