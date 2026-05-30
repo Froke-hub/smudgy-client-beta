@@ -6,6 +6,7 @@
 <div align="center">
   <a href="https://github.com/OBS-Akuma/smudgy-client/graphs/contributors">
     <img src="https://contrib.rocks/image?repo=OBS-Akuma/Smudgy-client" />
+   <img src="https://contrib.rocks/image?repo=irrvlo/juice-client" />
   </a>
 </div>
 
