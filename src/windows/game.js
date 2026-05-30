@@ -42,7 +42,7 @@ ipcMain.on("update-setting", (e, key, value) => {
 ipcMain.on("open-swapper-folder", () => {
   const swapperPath = path.join(
     app.getPath("documents"),
-    "JuiceClient/swapper/assets"
+    "SmudgyClient/swapper/assets"
   );
 
   if (!fs.existsSync(swapperPath)) {
@@ -56,7 +56,7 @@ ipcMain.on("open-swapper-folder", () => {
 ipcMain.on("open-scripts-folder", () => {
   const scriptsPath = path.join(
     app.getPath("documents"),
-    "JuiceClient/scripts"
+    "SmudgyClient/scripts"
   );
 
   if (!fs.existsSync(scriptsPath)) {
@@ -70,7 +70,7 @@ ipcMain.on("open-scripts-folder", () => {
 ipcMain.on("open-sounds-folder", () => {
   const soundsPath = path.join(
     app.getPath("documents"),
-    "JuiceClient/swapper/assets/media"
+    "SmudgyClient/swapper/assets/media"
   );
 
   if (!fs.existsSync(soundsPath)) {
@@ -142,7 +142,7 @@ const createWindow = () => {
 
   const scriptsPath = path.join(
     app.getPath("documents"),
-    "JuiceClient",
+    "SmudgyClient",
     "scripts"
   );
   if (!fs.existsSync(scriptsPath)) {
@@ -180,6 +180,7 @@ const createWindow = () => {
         [`${base_url}quests/hourly`]: "Viewing hourly quests meow",
         [`${base_url}friends`]: "Viewing friends meow",
         [`${base_url}inventory`]: "Viewing their inventory meow",
+        [`${base_url}/profile/NUGGET`]: "Viewing the smudgy client owners Profle",
       };
 
       let state;
@@ -189,7 +190,14 @@ const createWindow = () => {
       } else if (url.startsWith(`${base_url}games/`)) {
         state = "In a match meow";
       } else if (url.startsWith(`${base_url}profile/`)) {
-        state = "Viewing a profile meow";
+
+        const profileMatch = url.match(`${base_url}profile/(.+)`);
+        if (profileMatch && profileMatch[1]) {
+          const username = profileMatch[1];
+          state = `Viewing player profile #${username}`;
+        } else {
+          state = "Viewing a profile meow";
+        }
       } else {
         state = "In the lobby meow";
       }
@@ -200,7 +208,7 @@ const createWindow = () => {
 
   gameWindow.loadURL(settings.base_url);
   gameWindow.webContents.setUserAgent(
-    `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.7103.116 Safari/537.36 Electron/10.4.7 JuiceClient/${app.getVersion()}`
+    `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.7103.116 Safari/537.36 Electron/10.4.7 SmudgyClient/${app.getVersion()}`
   );
   initGameFeatures(gameWindow);
   gameWindow.removeMenu();
