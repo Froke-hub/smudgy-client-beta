@@ -52,8 +52,7 @@ Follow these steps to submit a pull request:
 
 - [Node.js (v14.21.3 recommended)](https://nodejs.org/dist/v14.21.3/node-v14.21.3-x64.msi)
 - Git
-- A modern browser for testing
-
+  
 ### Local Development
 
 1. Clone your fork:
