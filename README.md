@@ -43,10 +43,12 @@
    * Custom Keybinding
    * One click CSS apply
    * One click texture & scpoe apply
+   * One click map copy
+   * One click game presets
    * Userscripts
    * Userstyles
    * Resource Swapper
-   * Custom profile Backgrounds
+   * Custom profile Backgrounds and switcher
    * custom Shortids (e.g., FURRIE, GLOWIN)
 * User Interface
    * Friend Search
