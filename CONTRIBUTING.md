@@ -4,7 +4,7 @@
 </h1>
 
 <div align="center">
-  <a href="https://smudgy.store/">
+  <a href="https://github.com/OBS-Akuma/smudgy-client/graphs/contributors">
     <img src="https://contrib.rocks/image?repo=OBS-Akuma/Smudgy-client" />
   </a>
 </div>
