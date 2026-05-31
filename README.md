@@ -92,6 +92,7 @@
    * preview game images
    * News Card(s)
    * Simple Invite btns
+   * Lobby ui scale
 
 ## To use the swapper:
 1. Make sure you enabled it in the menu modal settings section
