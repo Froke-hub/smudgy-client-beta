@@ -29,6 +29,14 @@ class DiscordRPC {
     this.setActivity(activity);
   }
 
+  setProfileActivity(shortId) {
+    const activity = this.defaultActivity();
+    activity.state = `Viewing player profile #${shortId}`;
+    activity.smallImageKey = `https://www.smudgy.store/api/list/profile.png?meow=${shortId}`;
+    activity.smallImageText = `Viewing ${shortId}'s profile`;
+    this.setActivity(activity);
+  }
+
   defaultActivity() {
     return {
       startTimestamp: this.startTimestamp,
