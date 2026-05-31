@@ -4,8 +4,8 @@ const fs = require("fs");
 const url = require("url");
 
 const initResourceSwapper = () => {
-  protocol.registerFileProtocol("juiceclient", (request, callback) =>
-    callback({ path: request.url.replace("juiceclient://", "") })
+  protocol.registerFileProtocol("SmudgyClient", (request, callback) =>
+    callback({ path: request.url.replace("SmudgyClient://", "") })
   );
   protocol.registerFileProtocol("file", (request, callback) => {
     callback(decodeURIComponent(request.url.replace("file:///", "")));
@@ -13,7 +13,7 @@ const initResourceSwapper = () => {
 
   const SWAP_FOLDER = path.join(
     app.getPath("documents"),
-    "JuiceClient",
+    "SmudgyClient",
     "swapper"
   );
   const assetsFolder = path.join(SWAP_FOLDER, "assets");
