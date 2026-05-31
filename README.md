@@ -11,6 +11,30 @@
         <img src="https://img.shields.io/github/commit-activity/m/OBS-Akuma/Smudgy-client" />
 </div>
 
+<br>
+<div align="center">
+<a href="https://github.com/OBS-Akuma/smudgy-client"><img src="https://github.com/fluidicon.png" width="25" height="25" style="max-width:25px; border:none; margin:0; padding:0; vertical-align:middle;"></a>
+<a href="https://zenos-me.vercel.app/"><img src="https://zenos-me.vercel.app/logo.png" width="25" height="25" style="max-width:25px; border:none; margin:0; padding:0; vertical-align:middle;"></a>
+<a href="https://daymian.xyz/"><img src="https://daymian.xyz/Icons/globe.png" width="25" height="25" style="max-width:25px; border:none; margin:0; padding:0; vertical-align:middle;"></a>
+<a href="https://love.daymian.xyz/"><img src="https://love.daymian.xyz/icon.png" width="25" height="25" style="max-width:25px; border:none; margin:0; padding:0; vertical-align:middle;"></a>
+<a href="https://drift.daymian.xyz/"><img src="https://drift.daymian.xyz/assets/driftnobg.png" width="25" height="25" style="max-width:25px; border:none; margin:0; padding:0; vertical-align:middle;"></a>
+<a href="https://css.daymian.xyz"><img src="https://css.daymian.xyz/imgs/icon.png" width="25" height="25" style="max-width:25px; border:none; margin:0; padding:0; vertical-align:middle;"></a>
+<a href="https://sillimons.fun"><img src="https://sillimons.fun/favicon.svg" width="25" height="25" style="max-width:25px; border:none; margin:0; padding:0; vertical-align:middle;"></a>
+<a href="https://kirka.lukeskywalk.com/"><img src="https://kirka.lukeskywalk.com/kirkatradeslogo_36x36.png" width="25" height="25" style="max-width:25px; border:none; margin:0; padding:0; vertical-align:middle;"></a>
+<a href="https://tricko.pro/"><img src="https://tricko.pro/icon.svg" width="25" height="25" style="max-width:25px; border:none; margin:0; padding:0; vertical-align:middle;"></a>
+<a href="https://kirkacommunityhub.pages.dev/"><img src="https://kirkacommunityhub.pages.dev/assets/icon.png" width="25" height="25" style="max-width:25px; border:none; margin:0; padding:0; vertical-align:middle;"></a>
+<a href="https://smudgy.store/client/CustomBanner"><img src="https://www.smudgy.store/uploads/icon.png" width="25" height="25" style="max-width:25px; border:none; margin:0; padding:0; vertical-align:middle;"></a>
+<a href="https://api.kirka.io/api/docs/"><img src="https://api.kirka.io/public/favicon.ico" width="25" height="25" style="max-width:25px; border:none; margin:0; padding:0; vertical-align:middle;"></a>
+<a href="https://ktiers.com"><img src="https://ktiers.com/imgs/ktiersIcon.png" width="25" height="25" style="max-width:25px; border:none; margin:0; padding:0; vertical-align:middle;"></a>
+<a href="https://www.reddit.com/r/Kirka/"><img src="https://www.redditstatic.com/shreddit/assets/favicon/192x192.png" width="25" height="25" style="max-width:25px; border:none; margin:0; padding:0; vertical-align:middle;"></a>
+<a href="https://daymian-flow.netlify.app/"><img src="https://daymian-flow.netlify.app/imgs/flow.jpg" width="25" height="25" style="max-width:25px; border:none; margin:0; padding:0; vertical-align:middle;"></a>
+<a href="https://github.com/zVipexx/dawn-client"><img src="https://github.com/zVipexx/dawn-client/blob/main/src/assets/img/icon.png?raw=true" width="25" height="25" style="max-width:25px; border:none; margin:0; padding:0; vertical-align:middle;"></a>
+<a href="https://github.com/42infi/juice-client"><img src="https://raw.githubusercontent.com/42infi/juice-client/389288c611593fa529dbfcae3b224ed9800a8b2f/src/assets/img/icon.png" width="25" height="25" style="max-width:25px; border:none; margin:0; padding:0; vertical-align:middle;"></a>
+<a href="https://tricko.pro/redline"><img src="https://www.tricko.pro/icons/redline.png" width="25" height="25" style="max-width:25px; border:none; margin:0; padding:0; vertical-align:middle;"></a>
+<a href="https://faintclient.xyz/"><img src="https://cdn.discordapp.com/icons/1384855770620891237/23d8f10fd33185a44345e83e7feb752e.webp" width="25" height="25" style="max-width:25px; border:none; margin:0; padding:0; vertical-align:middle;"></a>
+<a href="https://github.com/skywalk1411/publikc"><img src="https://raw.githubusercontent.com/skywalk1411/publikc/a75407173e80c5bfba9c9dc3f22b278be12bbda2/src/assets/img/icon.png" width="25" height="25" style="max-width:25px; border:none; margin:0; padding:0; vertical-align:middle;"></a>
+<a href="https://github.com/imnotkoolkid/OBSIDIAN-CLIENT-preview/"><img src="https://raw.githubusercontent.com/imnotkoolkid/OBSIDIAN-CLIENT-preview/refs/heads/main/assets/Obsidian%20Client.ico" width="25" height="25" style="max-width:25px; border:none; margin:0; padding:0; vertical-align:middle;"></a>
+
 ## Keybinds
 
 | Key | Action |
