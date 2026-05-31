@@ -32,7 +32,8 @@ class DiscordRPC {
   setProfileActivity(shortId) {
     const activity = this.defaultActivity();
     activity.state = `Viewing player profile #${shortId}`;
-    activity.smallImageKey = `https://www.smudgy.store/api/list/profile.png?meow=${shortId}`;
+    const randomNumbers = Math.floor(Math.random() * 1000000);
+    activity.smallImageKey = `https://www.smudgy.store/api/list/profile.png?meow=${shortId}&v=${randomNumbers}`;
     activity.smallImageText = `Viewing ${shortId}'s profile`;
     this.setActivity(activity);
   }
