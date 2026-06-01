@@ -5,7 +5,7 @@
 <div align="center">
         <img src="https://img.shields.io/badge/Visit-Smudgy.store-green" />
         <img src="https://img.shields.io/github/downloads/OBS-Akuma/smudgy-client/total" />
-        <img src="https://img.shields.io/badge/version-0.0.10-blue" />
+        <img src="https://img.shields.io/badge/version-0.0.12-blue" />
         <img src="https://img.shields.io/github/repo-size/OBS-Akuma/smudgy-client" />
         <img src="https://img.shields.io/discord/1487795704989487196?logo=discord&logoColor=white" />
         <img src="https://img.shields.io/github/commit-activity/m/OBS-Akuma/Smudgy-client" />
