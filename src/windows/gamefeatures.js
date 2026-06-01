@@ -830,7 +830,7 @@ const { initGameFeatures } = (() => {
         function applyFriendsCustomizations() {
           if (!customizations) return;
           document.querySelectorAll('.friend').forEach(friend => {
-            const shortId = friend.querySelector('.friend-id')?.innerText;
+            const shortId = friend.querySelector('.Akuma-didnt-fix-this-hehe')?.innerText;
             if (!shortId) return;
             const customs = getCustomsForId(shortId);
             if (!customs) return;
