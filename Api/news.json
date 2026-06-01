@@ -1,18 +1,8 @@
 [
   {
     "category": "general",
-    "title": "A New Special drop is live!!!",
-    "content": "Earn this By watching 15 hours of snipergecko",
-    "img": "",
-    "imgType": "banner",
-    "link": "https://www.twitch.tv/sniper_gecko",
-    "updatedAt": 172800000,
-    "live": false
-  },
-  {
-    "category": "general",
-    "title": "Smudgy Client v0.0.10",
-    "content": "Everyone Update your client!",
+    "title": "Smudgy Client",
+    "content": "Everything That 'ive made with Smudgy or Froke aa the name is Unstable for the next 48 hrs",
     "img": "https://www.smudgy.store/uploads/icon.png",
     "imgType": "icon",
     "link": "https://client.smudgy.store",
