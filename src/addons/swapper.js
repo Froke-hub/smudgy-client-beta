@@ -4,8 +4,8 @@ const fs = require("fs");
 const url = require("url");
 
 const initResourceSwapper = () => {
-  protocol.registerFileProtocol("SmudgyClient", (request, callback) =>
-    callback({ path: request.url.replace("SmudgyClient://", "") })
+  protocol.registerFileProtocol("smudgyclient", (request, callback) =>
+    callback({ path: request.url.replace("smudgyclient://", "") })
   );
   protocol.registerFileProtocol("file", (request, callback) => {
     callback(decodeURIComponent(request.url.replace("file:///", "")));
@@ -80,7 +80,7 @@ const initResourceSwapper = () => {
       swap.filter,
       (details, callback) => {
         const redirect =
-          "SmudgyClient://" +
+          "smudgyclient://" +
           (swap.files[details.url.replace(/https|http|(\?.*)|(#.*)|\_/gi, "")] ||
             details.url);
         callback({ cancel: false, redirectURL: redirect });
