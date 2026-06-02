@@ -14,8 +14,7 @@ const { initGameFeatures } = (() => {
         let subnameInterval = null;
         
         // Background API variables
-        const ALL_BANNERS_API = "https://www.smudgy.store/api/user-banners";
-        const SINGLE_BANNER_API = "https://www.smudgy.store/api/user-banners?kirkaId=";
+        const BANNERS_API = "https://opensheet.elk.sh/1FNq0RTv0SOSSRVmGJFtli3Fld86uoAlAjDzHByRiZFI/1";
         let appliedElements = new Map();
         let bgIsProcessing = false;
         let currentProfileIdentifier = null;
@@ -56,33 +55,28 @@ const { initGameFeatures } = (() => {
         }
         
         // Background API functions
+        async function fetchAllUsersBanners() {
+          try {
+            const response = await fetch(BANNERS_API);
+            const data = await response.json();
+            return data.filter(b =>
+              b.equipped === "TRUE" && b.status === "approved"
+            );
+          } catch { return []; }
+        }
+
         async function fetchSpecificUserBanner(identifier, isLongId) {
           if (!identifier) return null;
           try {
-            if (isLongId || identifier.match(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i)) {
-              const response = await fetch(ALL_BANNERS_API);
-              const data = await response.json();
-              if (data.success && data.banners) {
-                return data.banners.find(b => b.userLongId === identifier && b.equipped === true) || null;
-              }
+            const banners = await fetchAllUsersBanners();
+            if (isLongId) {
+              return banners.find(b => b.userLongId === identifier) || null;
             } else {
-              const response = await fetch(\`\${SINGLE_BANNER_API}\${identifier}\`);
-              const data = await response.json();
-              if (data.success && data.banners && data.banners.length > 0) {
-                return data.banners.find(b => b.equipped === true) || null;
-              }
+              return banners.find(b =>
+                b.kirkaId?.toUpperCase() === identifier.toUpperCase()
+              ) || null;
             }
-            return null;
           } catch { return null; }
-        }
-        
-        async function fetchAllUsersBanners() {
-          try {
-            const response = await fetch(ALL_BANNERS_API);
-            const data = await response.json();
-            if (data.success && data.banners) return data.banners.filter(b => b.equipped === true);
-            return [];
-          } catch { return []; }
         }
         
         function isProfilePage() {
@@ -130,10 +124,12 @@ const { initGameFeatures } = (() => {
         function findBannerByIds(banners, shortId, longId) {
           if (!banners || banners.length === 0) return null;
           if (shortId) {
-            const m = banners.find(b => b.kirkaId === shortId && b.equipped === true);
+            const m = banners.find(b =>
+              b.kirkaId?.toUpperCase() === shortId.toUpperCase()
+            );
             if (m) return m;
           }
-          if (longId) return banners.find(b => b.userLongId === longId && b.equipped === true) || null;
+          if (longId) return banners.find(b => b.userLongId === longId) || null;
           return null;
         }
         
@@ -252,7 +248,7 @@ const { initGameFeatures } = (() => {
               const { shortId, longId } = getIdsFromElement(friend);
               const banner = findBannerByIds(banners, shortId, longId);
               if (banner) {
-                const identifier = banner.kirkaId === shortId ? shortId : longId;
+                const identifier = banner.kirkaId?.toUpperCase() === shortId?.toUpperCase() ? shortId : longId;
                 applyBackground(friend, identifier, banner.imageUrl);
               }
             }
@@ -459,7 +455,6 @@ const { initGameFeatures } = (() => {
           await scanAndApplyBackgrounds();
           maintainBackgroundEffects();
           
-          // Periodic maintenance
           setInterval(() => {
             maintainBackgroundEffects();
           }, 2000);
@@ -477,8 +472,7 @@ const { initGameFeatures } = (() => {
               checkAndRedirectCustomId();
               injectAllSubnames();
               scanAndApplyBackgrounds();
-              // Re-attempt profile lookup injection on navigation (friends page may reload)
-              }, 100);
+            }, 100);
           }
           blockUserNotFound();
         }, 500);
@@ -503,7 +497,6 @@ const { initGameFeatures } = (() => {
           }, 100);
         });
         
-        // Watch for dynamically added friend elements
         const domObserver = new MutationObserver(() => {
           scanAndApplyBackgrounds();
         });
@@ -604,12 +597,12 @@ const { initGameFeatures } = (() => {
 
         async function checkScammers(users) {
             try {
-                const response = await fetch('https://www.smudgy.store/api/scammers');
+                const response = await fetch('https://opensheet.elk.sh/1FNq0RTv0SOSSRVmGJFtli3Fld86uoAlAjDzHByRiZFI/2');
                 if (!response.ok) return;
                 const data = await response.json();
-                if (!data.success || !data.scammers) return;
+                if (!Array.isArray(data)) return;
                 const scammerMap = new Map();
-                data.scammers.forEach(scammer => {
+                data.forEach(scammer => {
                     const shortId = scammer.shortId ? scammer.shortId.replace(/^#/, '') : '';
                     if (shortId) scammerMap.set(shortId, scammer);
                 });
@@ -619,9 +612,9 @@ const { initGameFeatures } = (() => {
                         const scammer = scammerMap.get(shortId);
                         customNotification({
                             icon: \`https://www.smudgy.store/api/list/profile.png?meow=\${shortId}\`,
-                            message: \`\${user.wNmnw}\${shortId} has been marked Unsafe..\`,
+                            message: \`\${user.wNmnw} (\${shortId}) has been marked Unsafe\`,
                             onClick: () => {
-                                alert(\`Reason: \${scammer.reason}\\nReported by: \${scammer.reportedBy}\\nReported at: \${new Date(scammer.reportedAt._seconds * 1000).toLocaleString()}\`);
+                                alert(\`Reason: \${scammer.reason}\\nReported by: \${scammer.reportedBy}\\nDate: \${scammer.dateTime}\`);
                             }
                         });
                         notifiedScammers.add(shortId);
@@ -702,7 +695,6 @@ const { initGameFeatures } = (() => {
 
         let customizations = null;
 
-        // ── Inject style for gradient animation ──────────────────────────────
         if (!document.getElementById('kirka-badges-styles')) {
           const style = document.createElement('style');
           style.id = 'kirka-badges-styles';
@@ -720,7 +712,6 @@ const { initGameFeatures } = (() => {
           document.head.appendChild(style);
         }
 
-        // ── Fetch badge/gradient data ─────────────────────────────────────────
         async function fetchCustomizations() {
           try {
             const stored = localStorage.getItem('juice-customizations');
@@ -780,15 +771,12 @@ const { initGameFeatures } = (() => {
           }
         }
 
-        // ── Main lobby apply function ─────────────────────────────────────────
         function applyLobbyCustomizations() {
           if (!customizations) return;
 
-          // Get the logged-in user's short ID from the avatar info
           const avatarEl = document.querySelector('.avatar-info .username');
           let shortIdCard = avatarEl?.textContent.trim().split('#')[1] || null;
 
-          // Fallback: read from the stored current-user in localStorage
           if (!shortIdCard) {
             try {
               const stored = localStorage.getItem('current-user');
@@ -815,7 +803,6 @@ const { initGameFeatures } = (() => {
           if (customs.gradient) applyGradient(lobbyNickname, customs.gradient, customs.animated);
           else { lobbyNickname.style.color = ''; lobbyNickname.style.background = ''; }
 
-          // Don't double-add
           if (lobbyNickname.querySelector('.kirka-badges')) return;
 
           const badgesElem = document.createElement('div');
@@ -826,7 +813,6 @@ const { initGameFeatures } = (() => {
           populateBadges(badgesElem, customs, '32px');
         }
 
-        // ── Apply to friends list ─────────────────────────────────────────────
         function applyFriendsCustomizations() {
           if (!customizations) return;
           document.querySelectorAll('.friend').forEach(friend => {
@@ -853,16 +839,13 @@ const { initGameFeatures } = (() => {
           });
         }
 
-        // ── Run on any page change ────────────────────────────────────────────
         function run() {
           applyLobbyCustomizations();
           applyFriendsCustomizations();
         }
 
-        // Init: fetch data then apply immediately
         fetchCustomizations().then(() => {
           run();
-          // Watch for DOM changes so badges reappear after SPA navigation
           new MutationObserver(() => run()).observe(document.body, { childList: true, subtree: true });
         });
 
