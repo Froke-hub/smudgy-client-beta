@@ -1,5 +1,5 @@
 let git_base = "Cheeseybowrger";
-const opener_list = "https://raw.githubusercontent.com/zVipexx/dawn-client/refs/heads/main/openerlist.json";
+const opener_list = "https://raw.githubusercontent.com/OBS-Akuma/smudgy-client/refs/heads/main/Api/openerlist.json";
 
 async function fetchOpenerList() {
   const res = await fetch(opener_list);
