@@ -12,7 +12,8 @@
 </div>
 
 <div align="center">
-<img src="https://raw.githubusercontent.com/OBS-Akuma/KirkaBadges/refs/heads/main/Json/img/SmudgyClient-88x31.gif" />
+<img src="https://raw.githubusercontent.com/OBS-Akuma/KirkaBadges/refs/heads/main/Json/img/SmudgyClient-88x31.gif" height="25" />
+    <img src="https://starbug.neocities.org/images/buttons/Produced-By-Human-Not-By-AI-Badge-white.gif" height="25" />
 </div>
 
 
