@@ -11,6 +11,11 @@
         <img src="https://img.shields.io/github/commit-activity/m/OBS-Akuma/Smudgy-client" />
 </div>
 
+<div align="center">
+<img src="https://raw.githubusercontent.com/OBS-Akuma/KirkaBadges/refs/heads/main/Json/img/SmudgyClient-88x31.gif" />
+</div>
+
+
 <br>
 <div align="center">
 <a href="https://github.com/OBS-Akuma/smudgy-client"><img src="https://github.com/fluidicon.png" width="25" height="25" style="max-width:25px; border:none; margin:0; padding:0; vertical-align:middle;"></a>
