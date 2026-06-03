@@ -14,6 +14,7 @@
 - [ ] Add emojis just like discord but for kirka chat, users can upload a Emoji, then type :{emoji name}: and it will show the emoji ;3
 - [ ] Add username change item in inv (might do this, Would need a way to save the count And make it so it shows that Count for THAT user.)
 - [ ] add html edit mode, video:
+- [ ] Add join and Leave messages into kill feed
 - [ ] in the middle of stealing that one script (analytics) zenos made of Obsidianclient, i'm sure he won't care ;3
 - [x] Add clan gradient (Dawn Client has this feature not adding because it's not truly needed, unlike other features such as clan tracking, which helps clan users know what they've done)
 - [x] Add linking system
