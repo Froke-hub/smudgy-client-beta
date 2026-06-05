@@ -49,7 +49,7 @@
 <a href="https://github.com/skywalk1411/publikc"><img src="https://raw.githubusercontent.com/skywalk1411/publikc/a75407173e80c5bfba9c9dc3f22b278be12bbda2/src/assets/img/icon.png" width="25" height="25" style="max-width:25px; border:none; margin:0; padding:0; vertical-align:middle;"></a>
 <a href="https://github.com/imnotkoolkid/OBSIDIAN-CLIENT-preview/"><img src="https://raw.githubusercontent.com/imnotkoolkid/OBSIDIAN-CLIENT-preview/refs/heads/main/assets/Obsidian%20Client.ico" width="25" height="25" style="max-width:25px; border:none; margin:0; padding:0; vertical-align:middle;"></a>
 
-<a href="https://www.smudgy.store/api/list/badges.png"><img src="https://www.smudgy.store/api/list/badges.png?meow=2">
+<a href="https://www.smudgy.store/api/list/badges.png"><img src="https://www.smudgy.store/api/list/badges.png?meow=3">
 </div>
 </br> 
 
