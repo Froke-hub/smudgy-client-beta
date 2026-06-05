@@ -128,6 +128,8 @@
 
 [dawn-client](https://github.com/zVipexx/dawn-client) same client features as me, some stolen some we bot had when Forking [Juice Client](https://github.com/irrvlo/juice-client) 
 
+[ulpiano](https://discord.com/users/1353521991688261662) For the SmudgyAssets
+
 <div align="center">
     
   **you must give prominent author credit in the documentation or about box this goes for any file in this repo as of June 4th 26.)**  
