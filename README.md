@@ -115,7 +115,7 @@
 4. Reload the client to apply changes
 
 ## Credits
-[Juice Client](https://github.com/irrvlo/juice-client) ([irrvlo](https://irrvlo.xyz/)), for Making the base of the client
+[Juice Client](https://github.com/irrvlo/juice-client) ([irrvlo](https://irrvlo.xyz/)), for Making the Base or Framework of the client
 
 [Daymian](https://daymian.xyz/) for additional features
 
@@ -130,6 +130,8 @@
 [ulpiano](https://discord.com/users/1353521991688261662) For the SmudgyAssets
 
 [AwesomeSam](https://github.com/AwesomeSam9523) For the .rank Profile backgrounds, (note i didn't ask to use this ;3)
+
+[SniperGecko](https://discord.com/users/481959088029302796) grammar
 
 <div align="center">
     
