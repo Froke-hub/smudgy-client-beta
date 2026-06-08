@@ -115,7 +115,7 @@
 4. Reload the client to apply changes
 
 ## Credits
-[Juice Client](https://github.com/irrvlo/juice-client) ([irrvlo](https://irrvlo.xyz/)), for Making the bace of the client
+[Juice Client](https://github.com/irrvlo/juice-client) ([irrvlo](https://irrvlo.xyz/)), for Making the base of the client
 
 [Daymian](https://daymian.xyz/) for additional features
 
@@ -128,6 +128,8 @@
 [dawn-client](https://github.com/zVipexx/dawn-client) same client features as me, some stolen some we bot had when Forking [Juice Client](https://github.com/irrvlo/juice-client) 
 
 [ulpiano](https://discord.com/users/1353521991688261662) For the SmudgyAssets
+
+[AwesomeSam](https://github.com/AwesomeSam9523) For the .rank Profile backgrounds, (note i didn't ask to use this ;3)
 
 <div align="center">
     
