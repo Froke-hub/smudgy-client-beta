@@ -57,6 +57,10 @@
         Tools
       </div>
       <div class="tools-subtabs" id="tools-subtabs" style="display:none;">
+        <div class="tools-subtab" data-tools-tab="skins">
+          <i class="fas fa-shirt"></i>
+          Skins
+        </div>
         <div class="tools-subtab locked" data-tools-tab="player-lookup">
           <i class="fas fa-user-magnifying-glass"></i>
           Player Lookup
@@ -1026,6 +1030,37 @@
           </button>
         </div>
       </div>
+    </div>
+
+    <div id="tools-skins" class="juice options" style="display:none;">
+      <div class="skins-header">
+        <div class="skins-search-wrap">
+          <i class="fas fa-search"></i>
+          <input type="text" id="skins-search" placeholder="Search skins..." />
+        </div>
+        <div class="skins-filters">
+          <select id="skins-rarity-filter">
+            <option value="">All Rarities</option>
+            <option value="Common">Common</option>
+            <option value="Uncommon">Uncommon</option>
+            <option value="Rare">Rare</option>
+            <option value="Epic">Epic</option>
+            <option value="Legendary">Legendary</option>
+            <option value="Mythical">Mythical</option>
+          </select>
+          <select id="skins-type-filter">
+            <option value="">All Types</option>
+          </select>
+        </div>
+      </div>
+      <div id="skins-loading" class="assets-loading" style="display:none;">
+        <i class="fas fa-spinner fa-spin"></i> Loading...
+      </div>
+      <div id="skins-empty" class="assets-empty" style="display:none;">
+        <i class="fas fa-shirt"></i>
+        <span>No skins found</span>
+      </div>
+      <div id="skins-grid" class="skins-grid" style="display:none;"></div>
     </div>
 
   </div>
