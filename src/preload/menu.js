@@ -26,6 +26,7 @@ class Menu {
       about: this.menu.querySelector("#about-client"),
       assets: this.menu.querySelector("#assets-options"),
       news: this.menu.querySelector("#news-options"),
+      tools: this.menu.querySelector("#tools-options"),
     };
   }
 
@@ -61,6 +62,8 @@ class Menu {
     this.handleAboutLinks();
     this.initAssets();
     this.initNews();
+    this.initTools();
+    this.initSkins();
     this.localStorage.getItem("juice-menu-tab")
       ? this.handleTabChange(
           this.menu.querySelector(
@@ -76,12 +79,12 @@ class Menu {
     });
   }
 
- setUser() {
-  const user = JSON.parse(this.localStorage.getItem("current-user"));
-  if (user) {
-    this.menu.querySelector(".user").innerText = `${user.wNmnw}#${user.wMWWm}`;
+  setUser() {
+    const user = JSON.parse(this.localStorage.getItem("current-user"));
+    if (user) {
+      this.menu.querySelector(".user").innerText = `${user.wNmnw}#${user.wMWWm}`;
+    }
   }
-}
 
   setKeybind() {
     this.menu.querySelector(
@@ -619,25 +622,30 @@ class Menu {
   }
 
   handleTabChange(tab) {
+    if (!tab) return;
     const tabs = this.menu.querySelectorAll(".juice.tab");
     const tabName = tab.dataset.tab;
 
     this.localStorage.setItem("juice-menu-tab", tabName);
 
     const contents = this.menu.querySelectorAll(".juice.options");
-    tabs.forEach((tab) => {
-      tab.classList.remove("active");
-    });
-    contents.forEach((content) => {
-      content.classList.remove("active");
-    });
+    tabs.forEach((t) => t.classList.remove("active"));
+    contents.forEach((c) => c.classList.remove("active"));
     tab.classList.add("active");
-    this.tabToContentMap[tab.dataset.tab].classList.add("active");
 
-    // Show/hide assets subtabs in sidebar
-    const subtabs = this.menu.querySelector("#assets-subtabs");
-    if (subtabs) {
-      subtabs.style.display = tabName === "assets" ? "flex" : "none";
+    const targetContent = this.tabToContentMap[tabName];
+    if (targetContent) targetContent.classList.add("active");
+
+    // Show/hide assets subtabs
+    const assetsSubtabs = this.menu.querySelector("#assets-subtabs");
+    if (assetsSubtabs) {
+      assetsSubtabs.style.display = tabName === "assets" ? "flex" : "none";
+    }
+
+    // Show/hide tools subtabs
+    const toolsSubtabs = this.menu.querySelector("#tools-subtabs");
+    if (toolsSubtabs) {
+      toolsSubtabs.style.display = tabName === "tools" ? "flex" : "none";
     }
   }
 
@@ -1053,7 +1061,215 @@ class Menu {
     document.head.appendChild(script);
   }
 
-  initAssets() {
+  // ── Tools Tab ─────────────────────────────────────────────────────────────
+
+  initTools() {
+    const subtabContainer = this.menu.querySelector("#tools-subtabs");
+    if (!subtabContainer) return;
+
+    // Content panels keyed by data-tools-tab value
+    const toolsPanels = {
+      "skins": this.menu.querySelector("#tools-skins"),
+      "player-lookup": this.menu.querySelector("#tools-player-lookup"),
+      "inventory-lookup": this.menu.querySelector("#tools-inventory-lookup"),
+    };
+
+    // Default landing panel shown when the Tools main tab is clicked
+    const defaultPanel = this.menu.querySelector("#tools-options");
+
+    const showToolsPanel = (tabName) => {
+      // Hide all tools panels including the default landing
+      if (defaultPanel) defaultPanel.classList.remove("active");
+      Object.values(toolsPanels).forEach((p) => {
+        if (p) {
+          p.classList.remove("active");
+          p.style.display = "none";
+        }
+      });
+
+      const target = toolsPanels[tabName];
+      if (target) {
+        target.style.display = "";
+        target.classList.add("active");
+      }
+    };
+
+    subtabContainer.addEventListener("click", (e) => {
+      const tab = e.target.closest(".tools-subtab");
+      if (!tab) return;
+
+      // Locked tabs — block interaction
+      if (tab.classList.contains("locked")) return;
+
+      subtabContainer.querySelectorAll(".tools-subtab").forEach((t) =>
+        t.classList.remove("active")
+      );
+      tab.classList.add("active");
+      showToolsPanel(tab.dataset.toolsTab);
+    });
+
+    // When the main Tools tab is clicked, show default landing and reset subtab selection
+    const mainTab = this.menu.querySelector(`[data-tab="tools"]`);
+    if (mainTab) {
+      mainTab.addEventListener("click", () => {
+        // Hide any open subtab panel and show the default landing
+        Object.values(toolsPanels).forEach((p) => {
+          if (p) {
+            p.classList.remove("active");
+            p.style.display = "none";
+          }
+        });
+        if (defaultPanel) defaultPanel.classList.add("active");
+
+        // Deselect all subtabs
+        subtabContainer.querySelectorAll(".tools-subtab").forEach((t) =>
+          t.classList.remove("active")
+        );
+      });
+    }
+  }
+
+  // ── Skins Browser ─────────────────────────────────────────────────────────
+
+  initSkins() {
+    const SKINS_API   = "https://opensheet.elk.sh/1pxMSoaSo8FYv-OIJ26HpSj8EDy7EDRmatHyQW24o6E4/1";
+    const RENDERS_API = "https://raw.githubusercontent.com/OBS-Akuma/KirkaSkins/refs/heads/main/itemrenders.json";
+
+    const RARITY_ORDER = ["Common", "Uncommon", "Rare", "Epic", "Legendary", "Mythical"];
+
+    let allSkins   = [];
+    let renders    = {};
+    let loaded     = false;
+
+    const grid        = this.menu.querySelector("#skins-grid");
+    const loading     = this.menu.querySelector("#skins-loading");
+    const emptyEl     = this.menu.querySelector("#skins-empty");
+    const searchEl    = this.menu.querySelector("#skins-search");
+    const rarityEl    = this.menu.querySelector("#skins-rarity-filter");
+    const typeEl      = this.menu.querySelector("#skins-type-filter");
+
+    if (!grid) return;
+
+    // ── Render ──────────────────────────────────────────────────────────────
+    const renderSkins = () => {
+      const query  = (searchEl.value || "").toLowerCase().trim();
+      const rarity = rarityEl.value;
+      const type   = typeEl.value;
+
+      const filtered = allSkins.filter((s) => {
+        if (query  && !s["Skin Name"].toLowerCase().includes(query))  return false;
+        if (rarity && s["Skin Rarity"] !== rarity)                    return false;
+        if (type   && s["Type"] !== type)                             return false;
+        return true;
+      });
+
+      grid.innerHTML = "";
+
+      if (!filtered.length) {
+        grid.style.display = "none";
+        emptyEl.style.display = "flex";
+        return;
+      }
+
+      emptyEl.style.display = "none";
+      grid.style.display = "grid";
+
+      filtered.forEach((skin) => {
+        const name   = skin["Skin Name"]   || "Unknown";
+        const rarity = skin["Skin Rarity"] || "";
+        const value  = skin["Base Value"]  || "—";
+        const obtain = skin["Obtainable By"] || "—";
+        const type   = skin["Type"]        || "—";
+        const imgSrc = renders[name]       || "";
+
+        const rarityLower = rarity.toLowerCase();
+
+        const card = document.createElement("div");
+        card.className = `skin-card skin-rarity-${rarityLower}`;
+
+        card.innerHTML = `
+          <div class="skin-img-wrap">
+            ${imgSrc
+              ? `<img src="${imgSrc}" alt="${name}" loading="lazy" />`
+              : `<div class="skin-no-img"><i class="fas fa-shirt"></i></div>`}
+            <span class="skin-rarity-badge skin-rarity-${rarityLower}">${rarity}</span>
+          </div>
+          <div class="skin-info">
+            <span class="skin-name" title="${name}">${name}</span>
+            <div class="skin-meta">
+              <span class="skin-meta-row"><i class="fas fa-tag"></i> ${type}</span>
+              <span class="skin-meta-row"><i class="fas fa-coins"></i> ${value}</span>
+              <span class="skin-meta-row skin-obtain"><i class="fas fa-box-open"></i> ${obtain}</span>
+            </div>
+          </div>
+        `;
+
+        grid.appendChild(card);
+      });
+    };
+
+    // ── Populate type dropdown ───────────────────────────────────────────────
+    const populateTypes = () => {
+      const types = [...new Set(allSkins.map((s) => s["Type"]).filter(Boolean))].sort();
+      typeEl.innerHTML = `<option value="">All Types</option>`;
+      types.forEach((t) => {
+        const opt = document.createElement("option");
+        opt.value = t;
+        opt.textContent = t;
+        typeEl.appendChild(opt);
+      });
+    };
+
+    // ── Load data ────────────────────────────────────────────────────────────
+    const loadSkins = async () => {
+      loading.style.display = "flex";
+      grid.style.display    = "none";
+      emptyEl.style.display = "none";
+
+      try {
+        const [skinsData, rendersData] = await Promise.all([
+          fetch(SKINS_API).then((r) => r.json()),
+          fetch(RENDERS_API).then((r) => r.json()),
+        ]);
+
+        allSkins = skinsData.sort((a, b) => {
+          const ai = RARITY_ORDER.indexOf(a["Skin Rarity"]);
+          const bi = RARITY_ORDER.indexOf(b["Skin Rarity"]);
+          return bi - ai;
+        });
+        renders = rendersData;
+
+        populateTypes();
+      } catch (err) {
+        loading.style.display = "none";
+        grid.style.display    = "grid";
+        grid.innerHTML = `<div class="assets-empty"><i class="fas fa-triangle-exclamation"></i><span>Failed to load skins</span></div>`;
+        console.error("[Skins] load failed:", err);
+        return;
+      }
+
+      loading.style.display = "none";
+      renderSkins();
+    };
+
+    // ── Event listeners ──────────────────────────────────────────────────────
+    searchEl.addEventListener("input", renderSkins);
+    rarityEl.addEventListener("change", renderSkins);
+    typeEl.addEventListener("change", renderSkins);
+
+    // Lazy-load: only fetch when the skins panel is first shown
+    const skinsSubtab = this.menu.querySelector(`[data-tools-tab="skins"]`);
+    if (skinsSubtab) {
+      skinsSubtab.addEventListener("click", () => {
+        if (!loaded) {
+          loaded = true;
+          loadSkins();
+        }
+      });
+    }
+  }
+
+  // ─────────────────────────────────────────────────────────────────────────
     const TEXTURE_API = "https://raw.githubusercontent.com/imnotkoolkid/KCH/refs/heads/main/data/texture.json";
     const CROSSHAIR_API = "https://raw.githubusercontent.com/imnotkoolkid/KCH/refs/heads/main/data/crosshair.json";
     const CSS_API = "https://raw.githubusercontent.com/imnotkoolkid/KCH/refs/heads/main/data/css.json";
